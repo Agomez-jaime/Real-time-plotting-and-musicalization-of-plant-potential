@@ -119,7 +119,10 @@ def prueba():
     global buffer
     global hayDatosParaPintar
     global procesando
-
+    global f1lp
+    global f1hp
+    global f2lp
+    global f2hp
 
     if procesando:
         return
@@ -129,8 +132,8 @@ def prueba():
     #while True:
     datosarr = np.array(board.poll(420))
 
-    st_Filt = sigfun.f_GetIIRFilter(s_FsHz, [f1lp, f1hp], [f2lp, f2hp])
-    v_SigFilt = sigfun.f_IIRBiFilter(st_Filt, datosarr[:, 0])
+    st_Filt = sigfun.f_GetIIRFilter(s_FsHz, [f1lp, f1hp], [f2lp, f2hp]) #frecuencia de muestreo #frecuencia que 'quiero' #frecuencia de rechazo (entre medio hay un rango de transición)
+    v_SigFilt = sigfun.f_IIRBiFilter(st_Filt, datosarr[:, 0])  #Chebyshev orden 2
 
     buffer = np.array(v_SigFilt) * uV
 
@@ -375,31 +378,31 @@ lfilt = tk.Label(filtro,
                   text="Filtro").place(x=7,y=2)
 #Filtro 1 pasa bajas
 lf1lp = tk.Label(filtro,
-                  font= ('Times New Roman', 14),
+                  font= ('Times New Roman', 12),
                   fg= "#4608AA",
                   bg = "#33C8D5",
-                  text="Filtro 1 pasa bajas"
+                  text="Frecuencia de interés inferior"
                   ).place(x=7,y=35)
 #Filtro 1 pasa altas
 lf1hp = tk.Label(filtro,
-                  font= ('Times New Roman', 14),
+                  font= ('Times New Roman', 12),
                   fg= "#4608AA",
                   bg = "#33C8D5",
-                  text="Filtro 1 pasa altas"
+                  text="Frecuencia de interés superior"
                   ).place(x=7,y=75)
 #Filtro 2 pasa bajas
 lf2lp = tk.Label(filtro,
-                  font= ('Times New Roman', 14),
+                  font= ('Times New Roman', 12),
                   fg= "#4608AA",
                   bg = "#33C8D5",
-                  text="Filtro 2 pasa bajas"
+                  text="Frecuencia de rechazo inferior"
                   ).place(x=7,y=115)
 #Filtro 2 pasa altas
 lf2hp = tk.Label(filtro,
                   font= ('Times New Roman', 14),
                   fg= "#4608AA",
                   bg = "#33C8D5",
-                  text="Filtro 2 pasa altas"
+                  text="Frecuencia de rechazo superior"
                   ).place(x=7,y=155)
 #Exportar sonido
 lexs = tk.Label(exp,
